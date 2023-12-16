@@ -4,17 +4,43 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WiiU Homebrew</title>
+    <title>WiivU Brewers</title>
     <link rel="icon" href="https://i.ibb.co/LYHZggV/Adobe-Express-20231213-1855050-1.png" type="image/png">
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f0f0f0; /* Set your desired background color */
             color: #333; /* Set your desired text color */
+            text-align: center;
         }
 
         h1 {
             color: #009cc9; /* WiiU blue color */
+        }
+
+        header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        header img {
+            width: 100px;
+        }
+
+        .package {
+            text-align: left;
+            margin: 20px;
+            padding: 10px;
+            background-color: #fff; /* Set your desired background color for packages */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .package:hover {
+            transform: scale(1.05);
         }
 
         hr {
@@ -27,7 +53,7 @@
 <body>
 
 <header>
-    <img src="https://i.ibb.co/LYHZggV/Adobe-Express-20231213-1855050-1.png" alt="WiiU Logo" width="100">
+    <img src="https://i.ibb.co/LYHZggV/Adobe-Express-20231213-1855050-1.png" alt="WiiU Logo">
     <h1 style="color: #009cc9;">WiiU Homebrew</h1>
 </header>
 
@@ -41,7 +67,9 @@
             // Loop through packages and create HTML elements
             data.packages.forEach(package => {
                 const packageDiv = document.createElement('div');
+                packageDiv.className = 'package';
                 packageDiv.innerHTML = `
+                    <img src="${package.cover}" alt="${package.title}" style="width: 100px; height: 100px;">
                     <h2>${package.title}</h2>
                     <p><strong>Category:</strong> ${package.category}</p>
                     <p><strong>Author:</strong> ${package.author}</p>
@@ -60,5 +88,4 @@
 </script>
 
 </body>
-  </html>
-  
+</html>
