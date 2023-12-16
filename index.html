@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WiiU Homebrew</title>
+    <link rel="icon" href="https://i.ibb.co/LYHZggV/Adobe-Express-20231213-1855050-1.png" type="image/png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0; /* Set your desired background color */
+            color: #333; /* Set your desired text color */
+        }
+
+        h1 {
+            color: #009cc9; /* WiiU blue color */
+        }
+
+        hr {
+            border: 1px solid #009cc9; /* WiiU blue color */
+        }
+
+        /* Add more styling as needed */
+    </style>
+</head>
+<body>
+
+<header>
+    <img src="https://i.ibb.co/LYHZggV/Adobe-Express-20231213-1855050-1.png" alt="WiiU Logo" width="100">
+    <h1 style="color: #009cc9;">WiiU Homebrew</h1>
+</header>
+
+<div id="packages"></div>
+
+<script>
+    // Fetch the JSON data
+    fetch('https://wiiu.cdn.fortheusers.org/repo.json')
+        .then(response => response.json())
+        .then(data => {
+            // Loop through packages and create HTML elements
+            data.packages.forEach(package => {
+                const packageDiv = document.createElement('div');
+                packageDiv.innerHTML = `
+                    <h2>${package.title}</h2>
+                    <p><strong>Category:</strong> ${package.category}</p>
+                    <p><strong>Author:</strong> ${package.author}</p>
+                    <p><strong>Version:</strong> ${package.version}</p>
+                    <p><strong>Description:</strong> ${package.description}</p>
+                    <p><strong>License:</strong> ${package.license}</p>
+                    <p><strong>Download Count:</strong> ${package.app_dls}</p>
+                    <p><strong>Updated:</strong> ${package.updated}</p>
+                    <p><a href="${package.url}" target="_blank">GitHub Link</a></p>
+                    <hr>
+                `;
+                document.getElementById('packages').appendChild(packageDiv);
+            });
+        })
+        .catch(error => console.error('Error fetching data:', error));
+</script>
+
+</body>
+  </html>
+  
