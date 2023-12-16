@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WiiU Homebrew</title>
+    <title>Wii U Brewers</title>
     <link rel="icon" href="https://i.ibb.co/LYHZggV/Adobe-Express-20231213-1855050-1.png" type="image/png">
     <style>
         body {
@@ -37,6 +37,12 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease-in-out;
+        }
+
+        .package img {
+            width: 150px; /* Set the desired width for the cover images */
+            height: auto;
+            margin-bottom: 10px; /* Add some spacing between the image and text */
         }
 
         .package:hover {
@@ -74,7 +80,7 @@
                 const imageUrl = `https://wiiu.cdn.fortheusers.org/packages/${packageName}/icon.png`;
 
                 packageDiv.innerHTML = `
-                    <img src="${imageUrl}" alt="${package.title}" style="width: 100px; height: 100px;">
+                    <img src="${imageUrl}" alt="${package.title}">
                     <h2>${package.title}</h2>
                     <p><strong>Category:</strong> ${package.category}</p>
                     <p><strong>Author:</strong> ${package.author}</p>
