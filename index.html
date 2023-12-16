@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WiivU Brewers</title>
+    <title>WiiU Homebrew</title>
     <link rel="icon" href="https://i.ibb.co/LYHZggV/Adobe-Express-20231213-1855050-1.png" type="image/png">
     <style>
         body {
@@ -68,8 +68,13 @@
             data.packages.forEach(package => {
                 const packageDiv = document.createElement('div');
                 packageDiv.className = 'package';
+                
+                // Generate image URL based on package name
+                const packageName = package.name.toLowerCase();
+                const imageUrl = `https://wiiu.cdn.fortheusers.org/packages/${packageName}/icon.png`;
+
                 packageDiv.innerHTML = `
-                    <img src="${package.cover}" alt="${package.title}" style="width: 100px; height: 100px;">
+                    <img src="${imageUrl}" alt="${package.title}" style="width: 100px; height: 100px;">
                     <h2>${package.title}</h2>
                     <p><strong>Category:</strong> ${package.category}</p>
                     <p><strong>Author:</strong> ${package.author}</p>
