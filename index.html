@@ -75,9 +75,8 @@
                 const packageDiv = document.createElement('div');
                 packageDiv.className = 'package';
                 
-                // Generate image URL based on package name
-                const packageName = package.name.toLowerCase();
-                const imageUrl = `https://wiiu.cdn.fortheusers.org/packages/${packageName}/icon.png`;
+                // Generate image URL based on original package name
+                const imageUrl = `https://wiiu.cdn.fortheusers.org/packages/${package.name}/icon.png`;
 
                 packageDiv.innerHTML = `
                     <img src="${imageUrl}" alt="${package.title}">
