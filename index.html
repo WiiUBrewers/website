@@ -88,7 +88,7 @@
                 // Parse CSV data and create a map of author names to avatar URLs and author URLs
                 csvData.split('\n').forEach(line => {
                     const [author, avatarURL, authorURL] = line.split(',');
-                    authorsMap.set(author, { avatarURL, authorURL });
+                    authorsMap.set(author.toLowerCase(), { avatarURL, authorURL });
                 });
 
                 // Fetch the JSON data
@@ -122,7 +122,7 @@
 
                             // Split authors if there are multiple
                             const rawAuthors = package.author.split(',').map(author => author.trim());
-                            const authors = rawAuthors.map(rawAuthor => rawAuthor.split(' ')[0]); // Extracting first part
+                            const authors = rawAuthors.map(rawAuthor => rawAuthor.split(' ')[0].toLowerCase()); // Extracting first part and converting to lowercase
 
                             // Create a list of author avatars and links
                             const authorList = authors.map(author => {
