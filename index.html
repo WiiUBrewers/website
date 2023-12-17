@@ -76,60 +76,82 @@
 <div id="packages"></div>
 
 <script>
-    // Fetch the JSON data
-    fetch('https://wiiu.cdn.fortheusers.org/repo.json')
-        .then(response => response.json())
-        .then(data => {
-            // Loop through packages and create HTML elements
-            data.packages.forEach(package => {
-                const packageDiv = document.createElement('div');
-                packageDiv.className = 'package';
-
-                // Generate image URL based on the original package name
-                const imageUrl = `https://wiiu.cdn.fortheusers.org/packages/${package.name}/icon.png`;
-
-                // Create an image element to get the dominant color
-                const imgElement = new Image();
-                imgElement.src = imageUrl;
-                imgElement.crossOrigin = "Anonymous";
-
-                // Extract the dominant color using Vibrant.js
-                imgElement.onload = function () {
-                    const vibrant = new Vibrant(imgElement);
-                    const color = vibrant.swatches()['Vibrant'].getHex();
-
-                    // Apply the dynamic color to the hr element
-                    packageDiv.querySelector('hr').style.borderColor = color;
-                };
-
-                // Capitalize the category name
-                const capitalizedCategory = package.category.charAt(0).toUpperCase() + package.category.slice(1);
-
-                // Check if the category is "Aroma" and set the link accordingly
-                const categoryLink = (capitalizedCategory === 'Aroma') ? 'https://gbatemp.net/threads/release-aroma-environment-for-wii-u.618474/' : package.url;
-
-                const categoryText = (capitalizedCategory === 'Aroma') ? `<a href="${categoryLink}" target="_blank">${capitalizedCategory}</a>` : capitalizedCategory;
-
-                packageDiv.innerHTML = `
-                    <img src="${imageUrl}" alt="${package.title}">
-                    <div class="package-content">
-                        <h2>${package.title}</h2>
-                        <p><strong>Category:</strong> ${categoryText}</p>
-                        <p><strong>Authors:</strong> ${package.author}</p>
-                        <p><strong>Version:</strong> ${package.version}</p>
-                        <p><strong>Description:</strong> ${package.description}</p>
-                        <p><strong>License:</strong> ${package.license}</p>
-                        <p><strong>Download Count:</strong> ${package.app_dls}</p>
-                        <p><strong>Updated:</strong> ${package.updated}</p>
-                        <p><a href="${package.url}" target="_blank">GitHub Link</a></p>
-                    </div>
-                    <hr>
-                `;
-
-                document.getElementById('packages').appendChild(packageDiv);
+    // Fetch the CSV data for authors
+    fetch('https://raw.githubusercontent.com/WiiUBrewers/website/main/authors.csv')
+        .then(response => response.text())
+        .then(csvData => {
+            const authorsMap = new Map();
+            // Parse CSV data and create a map of author names to avatar URLs
+            csvData.split('\n').forEach(line => {
+                const [author, avatarURL] = line.split(',');
+                authorsMap.set(author, avatarURL);
             });
+
+            // Fetch the JSON data
+            fetch('https://wiiu.cdn.fortheusers.org/repo.json')
+                .then(response => response.json())
+                .then(data => {
+                    // Loop through packages and create HTML elements
+                    data.packages.forEach(package => {
+                        const packageDiv = document.createElement('div');
+                        packageDiv.className = 'package';
+
+                        // Generate image URL based on the original package name
+                        const imageUrl = `https://wiiu.cdn.fortheusers.org/packages/${package.name}/icon.png`;
+
+                        // Create an image element to get the dominant color
+                        const imgElement = new Image();
+                        imgElement.src = imageUrl;
+                        imgElement.crossOrigin = "Anonymous";
+
+                        // Extract the dominant color using Vibrant.js
+                        imgElement.onload = function () {
+                            const vibrant = new Vibrant(imgElement);
+                            const color = vibrant.swatches()['Vibrant'].getHex();
+
+                            // Apply the dynamic color to the hr element
+                            packageDiv.querySelector('hr').style.borderColor = color;
+                        };
+
+                        // Split authors if there are multiple
+                        const authors = package.author.split(',').map(author => author.trim());
+
+                        // Create a list of author avatars and links
+                        const authorList = authors.map(author => {
+                            const avatarURL = authorsMap.get(author);
+                            return `<a href="https://github.com/${author}" target="_blank"><img src="${avatarURL}" alt="${author}'s avatar" title="${author}"></a>`;
+                        }).join(', ');
+
+                        // Capitalize the category name
+                        const capitalizedCategory = package.category.charAt(0).toUpperCase() + package.category.slice(1);
+
+                        // Check if the category is "Aroma" and set the link accordingly
+                        const categoryLink = (capitalizedCategory === 'Aroma') ? 'https://gbatemp.net/threads/release-aroma-environment-for-wii-u.618474/' : package.url;
+
+                        const categoryText = (capitalizedCategory === 'Aroma') ? `<a href="${categoryLink}" target="_blank">${capitalizedCategory}</a>` : capitalizedCategory;
+
+                        packageDiv.innerHTML = `
+                            <img src="${imageUrl}" alt="${package.title}">
+                            <div class="package-content">
+                                <h2>${package.title}</h2>
+                                <p><strong>Category:</strong> ${categoryText}</p>
+                                <p><strong>Authors:</strong> ${authorList}</p>
+                                <p><strong>Version:</strong> ${package.version}</p>
+                                <p><strong>Description:</strong> ${package.description}</p>
+                                <p><strong>License:</strong> ${package.license}</p>
+                                <p><strong>Download Count:</strong> ${package.app_dls}</p>
+                                <p><strong>Updated:</strong> ${package.updated}</p>
+                                <p><a href="${package.url}" target="_blank">GitHub Link</a></p>
+                            </div>
+                            <hr>
+                        `;
+
+                        document.getElementById('packages').appendChild(packageDiv);
+                    });
+                })
+                .catch(error => console.error('Error fetching data:', error));
         })
-        .catch(error => console.error('Error fetching data:', error));
+        .catch(error => console.error('Error fetching authors CSV data:', error));
 </script>
 
 </body>
