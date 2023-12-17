@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Switch Brewers</title>
+    <link rel="icon" href="https://i.ibb.co/vkvNm0F/Adobe-Express-20231217-1905060-1.png" type="image/png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            text-align: center;
+        }
+
+        h1 {
+            color: #009cc9; /* WiiU blue color */
+        }
+
+        header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        header img {
+            width: 100px;
+        }
+
+        #packages {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .package {
+            text-align: center;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .package img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .package-content {
+            padding: 10px;
+        }
+
+        .package:hover {
+            transform: scale(1.05);
+        }
+
+        hr {
+            border: 1px solid #009cc9; /* WiiU blue color */
+        }
+
+        /* New styles for author images */
+        .package-content img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+    </style>
+    <!-- Add this script reference in the head section -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vibrant.js/1.0.0/Vibrant.min.js"></script>
+</head>
+<body>
+
+<header>
+    <img src="https://i.ibb.co/vkvNm0F/Adobe-Express-20231217-1905060-1.png" alt="Switch Logo">
+    <h1>Switch Homebrew</h1>
+</header>
+
+<div id="packages"></div>
+
+<script>
+    function fetchData() {
+        // Fetch the CSV data for authors
+        fetch('https://raw.githubusercontent.com/WiiUBrewers/website/main/authors.csv')
+            .then(response => response.text())
+            .then(csvData => {
+                const authorsMap = new Map();
+                // Parse CSV data and create a map of author names to avatar URLs and author URLs
+                csvData.split('\n').forEach(line => {
+                    const [author, avatarURL, authorURL] = line.split(',');
+                    authorsMap.set(author.toLowerCase(), { avatarURL, authorURL });
+                });
+
+                // Fetch the JSON data
+                fetch('https://switch.cdn.fortheusers.org/repo.json')
+                    .then(response => response.json())
+                    .then(data => {
+                        // Clear existing packages
+                        document.getElementById('packages').innerHTML = '';
+
+                        // Loop through packages and create HTML elements
+                        data.packages.forEach(package => {
+                            const packageDiv = document.createElement('div');
+                            packageDiv.className = 'package';
+
+                            // Generate image URL based on the original package name
+                            const imageUrl = `https://switch.cdn.fortheusers.org/packages/${package.name}/icon.png`;
+
+                            // Create an image element to get the dominant color
+                            const imgElement = new Image();
+                            imgElement.src = imageUrl;
+                            imgElement.crossOrigin = "Anonymous";
+
+                            // Extract the dominant color using Vibrant.js
+                            imgElement.onload = function () {
+                                const vibrant = new Vibrant(imgElement);
+                                const color = vibrant.swatches()['Vibrant'].getHex();
+
+                                // Apply the dynamic color to the hr element
+                                packageDiv.querySelector('hr').style.borderColor = color;
+                            };
+
+                            // Split authors if there are multiple
+                            const rawAuthors = package.author.split(',').map(author => author.trim());
+                            const authors = rawAuthors.map(rawAuthor => rawAuthor.split(' ')[0].toLowerCase()); // Extracting first part and converting to lowercase
+
+                            // Create a list of author avatars and links
+                            const authorList = authors.map(author => {
+                                const { avatarURL, authorURL } = authorsMap.get(author) || { avatarURL: '', authorURL: '' };
+                                return `<a href="${authorURL}" target="_blank"><img src="${avatarURL}" alt="${author}'s avatar" title="${author}"></a>`;
+                            }).join(', ');
+
+                            // Capitalize the category name
+                            const capitalizedCategory = package.category.charAt(0).toUpperCase() + package.category.slice(1);
+
+                            // Check if the category is "Aroma" and set the link accordingly
+                            const categoryLink = (capitalizedCategory === 'Aroma') ? 'https://gbatemp.net/threads/release-aroma-environment-for-wii-u.618474/' : package.url;
+
+                            const categoryText = (capitalizedCategory === 'Aroma') ? `<a href="${categoryLink}" target="_blank">${capitalizedCategory}</a>` : capitalizedCategory;
+
+                            packageDiv.innerHTML = `
+                                <img src="${imageUrl}" alt="${package.title}">
+                                <div class="package-content">
+                                    <h2>${package.title}</h2>
+                                    <p><strong>Category:</strong> ${categoryText}</p>
+                                    <p><strong>Authors:</strong> ${authorList}</p>
+                                    <p><strong>Version:</strong> ${package.version}</p>
+                                    <p><strong>Description:</strong> ${package.description}</p>
+                                    <p><strong>License:</strong> ${package.license}</p>
+                                    <p><strong>Download Count:</strong> ${package.app_dls}</p>
+                                    <p><strong>Updated:</strong> ${package.updated}</p>
+                                    <p><a href="${package.url}" target="_blank">GitHub Link</a></p>
+                                </div>
+                                <hr>
+                            `;
+
+                            document.getElementById('packages').appendChild(packageDiv);
+                        });
+                    })
+                    .catch(error => console.error('Error fetching data:', error));
+            })
+            .catch(error => console.error('Error fetching authors CSV data:', error));
+    }
+
+    // Fetch data initially
+    fetchData();
+</script>
+
+</body>
+</html>
