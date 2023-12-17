@@ -85,10 +85,10 @@
             .then(response => response.text())
             .then(csvData => {
                 const authorsMap = new Map();
-                // Parse CSV data and create a map of author names to avatar URLs
+                // Parse CSV data and create a map of author names to avatar URLs and author URLs
                 csvData.split('\n').forEach(line => {
-                    const [author, avatarURL] = line.split(',');
-                    authorsMap.set(author, avatarURL);
+                    const [author, avatarURL, authorURL] = line.split(',');
+                    authorsMap.set(author, { avatarURL, authorURL });
                 });
 
                 // Fetch the JSON data
@@ -125,8 +125,8 @@
 
                             // Create a list of author avatars and links
                             const authorList = authors.map(author => {
-                                const avatarURL = authorsMap.get(author);
-                                return `<a href="https://github.com/${author}" target="_blank"><img src="${avatarURL}" alt="${author}'s avatar" title="${author}"></a>`;
+                                const { avatarURL, authorURL } = authorsMap.get(author) || { avatarURL: '', authorURL: '' };
+                                return `<a href="${authorURL}" target="_blank"><img src="${avatarURL}" alt="${author}'s avatar" title="${author}"></a>`;
                             }).join(', ');
 
                             // Capitalize the category name
@@ -164,8 +164,8 @@
     // Fetch data initially
     fetchData();
 
-    // Fetch data every 30 minutes (adjust the interval as needed)
-    setInterval(fetchData, 30 * 60 * 1000);
+    // Fetch data every 10 seconds (adjust the interval as needed)
+    setInterval(fetchData, 10 * 1000);
 </script>
 
 </body>
