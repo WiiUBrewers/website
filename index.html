@@ -9,8 +9,8 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0; /* Set your desired background color */
-            color: #333; /* Set your desired text color */
+            background-color: #f0f0f0;
+            color: #333;
             text-align: center;
         }
 
@@ -29,38 +29,46 @@
             width: 100px;
         }
 
+        #packages {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
         .package {
-            text-align: left;
-            margin: 20px;
-            padding: 10px;
-            background-color: #fff; /* Set your desired background color for packages */
+            text-align: center;
+            background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease-in-out;
+            overflow: hidden;
         }
 
         .package img {
-            width: 150px; /* Set the desired width for the cover images */
+            width: 100%;
             height: auto;
-            margin-bottom: 10px; /* Add some spacing between the image and text */
+            border-radius: 8px 8px 0 0;
         }
 
         .package:hover {
             transform: scale(1.05);
         }
 
+        .package-content {
+            padding: 10px;
+        }
+
         hr {
             border: 1px solid #009cc9; /* WiiU blue color */
         }
-
-        /* Add more styling as needed */
     </style>
 </head>
 <body>
 
 <header>
     <img src="https://i.ibb.co/LYHZggV/Adobe-Express-20231213-1855050-1.png" alt="WiiU Logo">
-    <h1 style="color: #009cc9;">WiiU Homebrew</h1>
+    <h1>WiiU Homebrew</h1>
 </header>
 
 <div id="packages"></div>
@@ -80,15 +88,17 @@
 
                 packageDiv.innerHTML = `
                     <img src="${imageUrl}" alt="${package.title}">
-                    <h2>${package.title}</h2>
-                    <p><strong>Category:</strong> ${package.category}</p>
-                    <p><strong>Author:</strong> ${package.author}</p>
-                    <p><strong>Version:</strong> ${package.version}</p>
-                    <p><strong>Description:</strong> ${package.description}</p>
-                    <p><strong>License:</strong> ${package.license}</p>
-                    <p><strong>Download Count:</strong> ${package.app_dls}</p>
-                    <p><strong>Updated:</strong> ${package.updated}</p>
-                    <p><a href="${package.url}" target="_blank">GitHub Link</a></p>
+                    <div class="package-content">
+                        <h2>${package.title}</h2>
+                        <p><strong>Category:</strong> ${package.category}</p>
+                        <p><strong>Author:</strong> ${package.author}</p>
+                        <p><strong>Version:</strong> ${package.version}</p>
+                        <p><strong>Description:</strong> ${package.description}</p>
+                        <p><strong>License:</strong> ${package.license}</p>
+                        <p><strong>Download Count:</strong> ${package.app_dls}</p>
+                        <p><strong>Updated:</strong> ${package.updated}</p>
+                        <p><a href="${package.url}" target="_blank">GitHub Link</a></p>
+                    </div>
                     <hr>
                 `;
                 document.getElementById('packages').appendChild(packageDiv);
