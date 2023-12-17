@@ -63,6 +63,8 @@
             border: 1px solid #009cc9; /* WiiU blue color */
         }
     </style>
+    <!-- Add this script reference in the head section -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vibrant.js/1.0.0/Vibrant.min.js"></script>
 </head>
 <body>
 
@@ -82,9 +84,23 @@
             data.packages.forEach(package => {
                 const packageDiv = document.createElement('div');
                 packageDiv.className = 'package';
-                
-                // Generate image URL based on original package name
+
+                // Generate image URL based on the original package name
                 const imageUrl = `https://wiiu.cdn.fortheusers.org/packages/${package.name}/icon.png`;
+
+                // Create an image element to get the dominant color
+                const imgElement = new Image();
+                imgElement.src = imageUrl;
+                imgElement.crossOrigin = "Anonymous";
+
+                // Extract the dominant color using Vibrant.js
+                imgElement.onload = function () {
+                    const vibrant = new Vibrant(imgElement);
+                    const color = vibrant.swatches()['Vibrant'].getHex();
+
+                    // Apply the dynamic color to the hr element
+                    packageDiv.querySelector('hr').style.borderColor = color;
+                };
 
                 packageDiv.innerHTML = `
                     <img src="${imageUrl}" alt="${package.title}">
@@ -101,6 +117,7 @@
                     </div>
                     <hr>
                 `;
+
                 document.getElementById('packages').appendChild(packageDiv);
             });
         })
