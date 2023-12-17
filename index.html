@@ -88,8 +88,7 @@
                 // Parse CSV data and create a map of author names to avatar URLs and author URLs
                 csvData.split('\n').forEach(line => {
                     const [author, avatarURL, authorURL] = line.split(',');
-                    const formattedAuthor = author.replace(/\s/g, '_'); // Replace spaces with underscores
-                    authorsMap.set(formattedAuthor, { avatarURL, authorURL });
+                    authorsMap.set(author, { avatarURL, authorURL });
                 });
 
                 // Fetch the JSON data
