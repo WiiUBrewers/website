@@ -102,11 +102,19 @@
                     packageDiv.querySelector('hr').style.borderColor = color;
                 };
 
+                // Capitalize the category name
+                const capitalizedCategory = package.category.charAt(0).toUpperCase() + package.category.slice(1);
+
+                // Check if the category is "Aroma" and set the link accordingly
+                const categoryLink = (capitalizedCategory === 'Aroma') ? 'https://gbatemp.net/threads/release-aroma-environment-for-wii-u.618474/' : package.url;
+
+                const categoryText = (capitalizedCategory === 'Aroma') ? `<a href="${categoryLink}" target="_blank">${capitalizedCategory}</a>` : capitalizedCategory;
+
                 packageDiv.innerHTML = `
                     <img src="${imageUrl}" alt="${package.title}">
                     <div class="package-content">
                         <h2>${package.title}</h2>
-                        <p><strong>Category:</strong> ${package.category}</p>
+                        <p><strong>Category:</strong> ${categoryText}</p>
                         <p><strong>Authors:</strong> ${package.author}</p>
                         <p><strong>Version:</strong> ${package.version}</p>
                         <p><strong>Description:</strong> ${package.description}</p>
