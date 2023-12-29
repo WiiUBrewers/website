@@ -66,10 +66,36 @@
         }
 
         /* New styles for author images */
-        .package-content img {
+        .package-content .avatar img {
             width: 30px;
             height: 30px;
             border-radius: 50%;
+        }
+
+        /* Add a new class for the gamer card image */
+        .gamer-card {
+            width: auto;
+            height: 150px;
+            max-width: 100%;
+            margin: 10px;
+            border-radius: 8px; /* Rounded corners for gamer card */
+        }
+
+        footer {
+            margin-top: 20px;
+        }
+
+        footer div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        footer img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-bottom: 10px;
         }
     </style>
     <!-- Add this script reference in the head section -->
@@ -130,7 +156,7 @@
                                 // Create a list of author avatars and links
                                 const authorList = authors.map(author => {
                                     const { avatarURL, authorURL } = authorsMap.get(author) || { avatarURL: '', authorURL: '' };
-                                    return `<a href="${authorURL}" target="_blank"><img src="${avatarURL}" alt="${author}'s avatar" title="${author}"></a>`;
+                                    return `<a href="${authorURL}" target="_blank" class="avatar"><img src="${avatarURL}" alt="${author}'s avatar" title="${author}"></a>`;
                                 }).join(', ');
 
                                 // Capitalize the category name
@@ -177,6 +203,15 @@
 </header>
 
 <div id="packages"></div>
+
+<footer>
+    <div>
+        <img src="https://i.ibb.co/Wsm3yJ0/69159547.png" alt="FoxStorm1's avatar" title="FoxStorm1">
+        <p>Author: FoxStorm1</p>
+        <p>GitHub: <a href="https://github.com/Yeetov" target="_blank">Yeetov</a></p>
+        <img class="gamer-card" src="https://phalk.net/nintendo/gamercard.php?id=101.png" alt="FoxStorm1's Gamer Card" title="FoxStorm1's Gamer Card">
+    </div>
+</footer>
 
 </body>
 </html>
