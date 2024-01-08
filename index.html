@@ -2,10 +2,66 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0;url=switch.html">
-    <title>Redirecting...</title>
+    <title>Choose an Option</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f5f5f5; /* Light gray background */
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #1e88e5; /* Blue header text color */
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+        }
+
+        .option {
+            margin: 15px;
+        }
+
+        .option a {
+            text-decoration: none;
+            font-size: 18px;
+            color: #333; /* Dark gray text color */
+            padding: 10px 20px;
+            border: 2px solid #1e88e5; /* Blue border */
+            border-radius: 5px;
+            background-color: #fff; /* White background */
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+        }
+
+        .option a:hover {
+            background-color: #1e88e5; /* Hovered blue background */
+            color: #fff; /* Hovered white text color */
+        }
+
+        .option a:active {
+            transform: scale(0.95);
+        }
+    </style>
 </head>
 <body>
-    <p>If you are not redirected, <a href="switch.html">click here</a>.</p>
+    <h1>Choose an Option</h1>
+    <div class="options-container">
+        <div class="option">
+            <a href="https://homebrewheroes.github.io/customgameicons/" target="_blank">Custom Nintendo Switch Icons</a>
+        </div>
+        <div class="option">
+            <a href="https://homebrewheroes.github.io/website/wiiu.html" target="_blank">Homebrew Apps for Wii U</a>
+        </div>
+        <div class="option">
+            <a href="https://homebrewheroes.github.io/website/switch.html" target="_blank">Homebrew Apps for Nintendo Switch</a>
+        </div>
+    </div>
 </body>
 </html>
