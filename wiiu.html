@@ -126,7 +126,7 @@
 <body>
 
 <header>
-    <a href="https://homebrewheroes.github.io/website/switch.html">
+    <a href="https://homebrewheroes.github.io/website/">
         <img src="https://i.ibb.co/LYHZggV/Adobe-Express-20231213-1855050-1.png" alt="WiiU Logo">
     </a>
     <h1>WiiU Homebrew</h1>
@@ -229,6 +229,14 @@
             })
             .catch(error => console.error('Error fetching authors CSV data:', error));
     }
+
+    // Add event listener for the home button
+    document.addEventListener('DOMContentLoaded', function () {
+        const homeButton = document.getElementById('home-button');
+        homeButton.addEventListener('click', function () {
+            window.location.href = 'https://homebrewheroes.github.io/website/';
+        });
+    });
 
     // Fetch data initially
     fetchData();
