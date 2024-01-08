@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Choose an Option</title>
     <link rel="apple-touch-icon" sizes="180x180" href="https://raw.githubusercontent.com/HomebrewHeroes/customgameicons/main/Favicons/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://raw.githubusercontent.com/HomebrewHeroes/customgameicons/main/Favicons/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="https://raw.githubusercontent.com/HomebrewHeroes/customgameicons/main/Favicons/favicon-16x16.png">
-<link rel="manifest" href="https://raw.githubusercontent.com/HomebrewHeroes/customgameicons/main/Favicons/site.webmanifest">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://raw.githubusercontent.com/HomebrewHeroes/customgameicons/main/Favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://raw.githubusercontent.com/HomebrewHeroes/customgameicons/main/Favicons/favicon-16x16.png">
+    <link rel="manifest" href="https://raw.githubusercontent.com/HomebrewHeroes/customgameicons/main/Favicons/site.webmanifest">
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -24,9 +25,29 @@
 
         .options-container {
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            justify-content: space-around;
             margin-top: 50px;
+        }
+
+        .switch-section,
+        .wiiu-section {
+            flex: 1;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .switch-section {
+            background-color: #e60012; /* Switch color */
+        }
+
+        .wiiu-section {
+            background-color: #0297c9; /* Wii U color */
+        }
+
+        .section-title {
+            font-size: 24px;
+            color: #fff; /* White text color for section titles */
+            margin-bottom: 10px;
         }
 
         .option {
@@ -34,10 +55,11 @@
         }
 
         .option a {
+            display: block;
             text-decoration: none;
             font-size: 18px;
             color: #333; /* Dark gray text color */
-            padding: 10px 20px;
+            padding: 15px 20px;
             border: 2px solid #1e88e5; /* Blue border */
             border-radius: 5px;
             background-color: #fff; /* White background */
@@ -54,18 +76,26 @@
         }
     </style>
 </head>
+
 <body>
-    <h1>Choose an Option</h1>
+    <h1>Homebrew Heroes</h1>
     <div class="options-container">
-        <div class="option">
-            <a href="https://homebrewheroes.github.io/customgameicons/" target="_blank">Custom Nintendo Switch Icons</a>
+        <div class="switch-section">
+            <div class="section-title">Nintendo Switch</div>
+            <div class="option">
+                <a href="https://homebrewheroes.github.io/customgameicons/" target="_blank">Custom Icons</a>
+            </div>
+            <div class="option">
+                <a href="https://homebrewheroes.github.io/website/switch.html" target="_blank">Homebrew Apps</a>
+            </div>
         </div>
-        <div class="option">
-            <a href="https://homebrewheroes.github.io/website/wiiu.html" target="_blank">Homebrew Apps for Wii U</a>
-        </div>
-        <div class="option">
-            <a href="https://homebrewheroes.github.io/website/switch.html" target="_blank">Homebrew Apps for Nintendo Switch</a>
+        <div class="wiiu-section">
+            <div class="section-title">Wii U</div>
+            <div class="option">
+                <a href="https://homebrewheroes.github.io/website/wiiu.html" target="_blank">Homebrew Apps</a>
+            </div>
         </div>
     </div>
 </body>
+
 </html>
